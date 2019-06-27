@@ -1,0 +1,38 @@
+classic binary search写法：
+
+publi int binarySearch(int[]array, int target)
+{
+  //check corner case
+  if(array==null || array.length==0)
+    return -1;
+    
+   int left = 0;
+   int right = array.length-1;
+   while(left<=right)
+   {
+      int mid = left+(right-left)/2;
+      if(array[mid]==target)
+        return mid;
+      else if(target<array[mid])
+        right=mid-1;
+      else
+        left=mid+1;
+     }
+     
+   return -1;
+   
+   1. mid这样定义的原因是防止overflow
+   2. class binary search最需要注意的问题是当index只剩下left和right两个值的时候，这时候取mid总会和left值重叠，在此之后无论反复多次取mid，都会取到同一个mid
+   值，造成deadloop.
+   3.为了防止这种情况，在update right或者value的时候，我们要在mid的基础上+1或者-1，这样保证新的left或者mid不会一直在同一个位置上，left和right index
+   可以随着循环的增加保持移动
+   4.除此以外还要注意while loop的终止条件。上例写法的终止条件是right和left错位，也就是最后一种情况可能存在left/right index在同一个位置上。试想一下，如果我们保证
+   left和right的update方法，把while loop 的终止条件改成（left<right）,终止条件就变成left和right分别占用两个index，这个时候无法取到符合条件的mid值就跳出loop
+   了，最后两个元素实际上并没有被比较到或者只比较到1个。
+ 
+
+
+
+
+
+}
